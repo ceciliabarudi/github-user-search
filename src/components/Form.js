@@ -17,6 +17,14 @@ class Form extends Component {
   handleSubmit = (event) => {
     event.preventDefault()
     console.log('i was clicked')
+
+    axios.get(`https://api.github.com/search/users?q=${this.state.username}+in:login`)
+      .then((username) => {
+        console.log('We found ', username.data.items[0].login)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
   }
 
   render() {
