@@ -21,13 +21,12 @@ class App extends Component {
     event.preventDefault()
     const username = this.state.username;
 
-    axios.get(`https://api.github.com/search/users?q=${this.state.filterword}+type:user+in:login`)
+    axios.get(`https://api.github.com/search/users?q=${username}+type:user+in:login`)
       .then((response) => {
         console.log(response.data.items)
         this.setState({
-          username,
           users: response.data.items,
-          filterword: this.state.username,
+          filterword: username,
           isLoading: false,
         })
       })
@@ -55,4 +54,3 @@ class App extends Component {
 }
 
 export default App;
-
