@@ -7,7 +7,7 @@ class App extends Component {
   state = {
     username: '',
     users: [],
-    filterword: '',
+    //filterword: '',
     isLoading: true
   }
 
@@ -26,7 +26,7 @@ class App extends Component {
         console.log(response.data.items)
         this.setState({
           users: response.data.items,
-          filterword: username,
+          //filterword: username,
           isLoading: false,
         })
       })
@@ -36,8 +36,7 @@ class App extends Component {
   }
 
   render() {
-    const filteredUser = this.state.users.filter((user) => { return user.login === this.state.filterword })
-    console.log(this.state.users)
+ 
     return (
       
       <div className="App">
@@ -46,8 +45,7 @@ class App extends Component {
           <input type="text" onChange={this.handleOnChange} value={this.state.username} placeholder="write username here" />
           <input type="submit"/>
         </form>
-        
-        <UserList filterword={filteredUser} isLoading={this.state.isLoading} users={this.state.users}/>
+        <UserList users={this.state.users} isLoading={this.state.isLoading}/>
       </div>
     );
   }
