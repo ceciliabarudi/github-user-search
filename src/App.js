@@ -1,32 +1,24 @@
 import React, { Component } from 'react';
 import './App.css';
 import UserList from './components/UserList';
-import axios from 'axios'
+import Form from './components/Form';
+import githubService from './lib/githubService';
+
 
 class App extends Component {
   state = {
-    username: '',
     users: [],
-    //filterword: '',
-    isLoading: true
+    isLoading: false,
   }
 
-  handleOnChange = (event) => {
+  handleOnSubmit = (username) => {
     this.setState({
-      username: event.target.value
+      isLoading: true,
     })
-  }
-
-  handleSubmit = (event) => {
-    event.preventDefault()
-    const username = this.state.username;
-
-    axios.get(`https://api.github.com/search/users?q=${username}+type:user+in:login`)
-      .then((response) => {
-        console.log(response.data.items)
+    githubService.getUsersBySearchTerm(username)
+      .then((data) => {
         this.setState({
-          users: response.data.items,
-          //filterword: username,
+          users: data.items,
           isLoading: false,
         })
       })
@@ -41,10 +33,7 @@ class App extends Component {
       
       <div className="App">
         <h1>Search GithHub Users</h1>
-        <form onSubmit={this.handleSubmit}>
-          <input type="text" onChange={this.handleOnChange} value={this.state.username} placeholder="write username here" />
-          <input type="submit"/>
-        </form>
+        <Form onSubmit={this.handleOnSubmit}/>
         <UserList users={this.state.users} isLoading={this.state.isLoading}/>
       </div>
     );

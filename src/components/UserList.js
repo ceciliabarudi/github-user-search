@@ -4,7 +4,7 @@ import React from 'react';
 
 const UserList = (props) => {
   const users = props.users;
-  const { isLoading } = props.isLoading;
+  const { isLoading } = props;
   
   if (isLoading) {
     return <div>Loading...</div>
